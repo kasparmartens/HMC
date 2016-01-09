@@ -15,6 +15,7 @@ gaussian_mixture_log_density = function(x, lambda, mu, Sigma){
 # and additionally calculate the gradient of log density
 gaussian_mixture_log_density_and_gradient = function(x, lambda, mu, Sigma){
   n_components = length(lambda)
+  d = length(mu[[1]])
   
   # log-density evaluation
   log_contribution = rep(NA, n_components)
@@ -24,7 +25,7 @@ gaussian_mixture_log_density_and_gradient = function(x, lambda, mu, Sigma){
   log_density = log(sum(exp(log_contribution)))
   
   # gradient evaluation
-  grad_contribution = matrix(NA, n_components, n_components)
+  grad_contribution = matrix(NA, d, n_components)
   for(k in 1:n_components){
     grad_temp = solve(Sigma[[k]]) %*% (x - mu[[k]])
     grad_contribution[, k] = exp(log_contribution[k]) * lambda[[k]] * grad_temp
