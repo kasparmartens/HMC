@@ -15,7 +15,7 @@ for(i in 1:length(xval)){
     log_density[i, j] = gaussian_mixture_log_density(c(xval[i], yval[j]), lambda, mu, Sigma)
   }
 }
-contour(xval, yval, log_density)
+contour(xval, yval, exp(log_density))
 
 # compute gradients on another grid (not so dense) and plot the arrows
 x_grad = seq(-3, 3, 0.5)
@@ -25,6 +25,6 @@ for(i in 1:length(x_grad)){
     x = x_grad[i]
     y = y_grad[j]
     obj = gaussian_mixture_log_density_and_gradient(c(x, y), lambda, mu, Sigma)
-    arrows(x, y, x+obj$gradient[1]*30, y+obj$gradient[2]*30, length=0.05, col="red")
+    arrows(x, y, x+obj$gradient[1]*0.1, y+obj$gradient[2]*0.1, length=0.05, col="red")
   }
 }
